@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MakeOrders</string>
+    <string name="newUser"><a href="">Register Now</a></string>
+</resources>
