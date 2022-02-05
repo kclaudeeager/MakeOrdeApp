@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -102,6 +105,25 @@ Button loginBtn;
                 map.put(key, value);
             }   return map;
         }
+        public void parseVollyError(VolleyError error){
+            try {
+                String responseBody=new String(error.networkResponse.data,"utf-8");
+                JSONObject data=new JSONObject(responseBody);
+                Log.i("ErrorRe: ",responseBody);
+                String message=data.getString("message");
+                Log.d("Status: ",data.getString("status"));
+                if(data.getString("status").equalsIgnoreCase("500") && message==""){
+                    message="Invalid email or password";
+                }
+                Log.i("Error: ",message);
+                Toast.makeText(getApplicationContext(),"Error: "+message,Toast.LENGTH_LONG).show();
+            } catch (UnsupportedEncodingException | JSONException  e) {
+                e.printStackTrace();
+            }
+            catch (NullPointerException nullPointerException){
+               nullPointerException.printStackTrace();
+            }
+        }
     synchronized private void Login(String email,String password){
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(true);
@@ -146,8 +168,7 @@ Button loginBtn;
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(MainActivity.this,"Error occured: "+error.getMessage(),Toast.LENGTH_LONG).show();
-                            VolleyLog.d("Error: Tag", "Error: " + error.toString());
+                           parseVollyError(error);
                             emailText.setText("");
                             passwordeText.setText("");
                             progressDialog.dismiss();
@@ -167,7 +188,8 @@ Button loginBtn;
                     };
 
                     // Adding request to request queue
-                    Volley.newRequestQueue(MainActivity.this).add(jsonObjReq);
+                    Volley.newRequestQueue(MainActivity.this).add(jsonObjReq).setRetryPolicy(new DefaultRetryPolicy(0,-1,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT))
+                    .setShouldCache(false);
 
                 }
 

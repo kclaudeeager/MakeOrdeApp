@@ -44,11 +44,11 @@ EditText firstNameText,lastNameText,companyText,emailText,passwordText;
             public void onClick(View view) {
              firstName=firstNameText.getText().toString();
              lastName=lastNameText.getText().toString();
-             company=passwordText.getText().toString();
+                password=passwordText.getText().toString();
              email=emailText.getText().toString();
              email=email.toLowerCase();
              emailText.setText(email);
-             password=companyText.getText().toString();
+            company=companyText.getText().toString();
              if((firstName.length()>=4)&&(lastName.length()>=2)&&(!company.isEmpty())&& (email.endsWith("@gmail.com"))&&(!password.isEmpty())){
                  register_User(firstName,lastName,company,email,password);
              }
@@ -131,7 +131,7 @@ EditText firstNameText,lastNameText,companyText,emailText,passwordText;
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Toast.makeText(RegistrationActivity.this,"Error occured: "+error.getMessage(),Toast.LENGTH_LONG).show();
-                            VolleyLog.d("Error: Tag", "Error: " + error.toString());
+                            VolleyLog.d("Error: Tag", "Error: " + "Email already in use");
                             emailText.setText("");
                             passwordText.setText("");
                             progressDialog.dismiss();
