@@ -3,11 +3,13 @@ package com.demo.makeorders;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,6 +33,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 String email,password;
 EditText emailText,passwordeText;
+TextView link;
 Map<String,Object> UserInfo;
 String token;
 Button loginBtn;
@@ -41,12 +44,27 @@ Button loginBtn;
          emailText=(EditText) findViewById(R.id.loginEmail);
          passwordeText=(EditText) findViewById(R.id.password);
          loginBtn=(Button) findViewById(R.id.login);
+         link=(TextView)findViewById(R.id.newuser);
+         link.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 Intent regiterIntent=new Intent(MainActivity.this,RegistrationActivity.class);
+                 startActivity(regiterIntent);
+             }
+         });
          loginBtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  email=emailText.getText().toString();
                  password=passwordeText.getText().toString();
+                 if(!email.isEmpty()&& !password.isEmpty())
                  Login(email,password);
+                 else {
+                     if(email.isEmpty())
+                         emailText.setError("Email is required!");
+                     if(password.isEmpty())
+                         passwordeText.setError("Password is required!");
+                 }
              }
          });
 
@@ -85,13 +103,17 @@ Button loginBtn;
             }   return map;
         }
     synchronized private void Login(String email,String password){
-        final ProgressDialog progressDialog = ProgressDialog.show(this, "", "Please wait for uploading....");
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(true);
+        progressDialog.setMessage("Please wait for loading....");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
         new Thread() {
             public void run() {
                 try {
                     RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
                     int method=1;
-                    String url = "http://192.168.43.141:9090/api/v1/User/login";
+                    String url = "https://orderproductsapi.herokuapp.com/api/v1/User/login";
 
                     JSONObject js = new JSONObject();
                     try {
@@ -116,6 +138,7 @@ Button loginBtn;
                                         token=UserInfo.get("token").toString();
                                         Log.i("User details:",UserInfo.get("User").toString());
                                         Log.d("token: ",token);
+                                        progressDialog.dismiss();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -123,10 +146,11 @@ Button loginBtn;
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(MainActivity.this,"Invvalid email or password",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,"Error occured: "+error.getMessage(),Toast.LENGTH_LONG).show();
                             VolleyLog.d("Error: Tag", "Error: " + error.toString());
                             emailText.setText("");
                             passwordeText.setText("");
+                            progressDialog.dismiss();
                         }
                     }) {
 
@@ -151,9 +175,8 @@ Button loginBtn;
                     Log.e("tag", ""+e.getMessage());
                 }
                 // dismiss the progress dialog
-                progressDialog.dismiss();
-                emailText.setText("");
-                passwordeText.setText("");
+
+
                 // finish();
             }
         }.start();

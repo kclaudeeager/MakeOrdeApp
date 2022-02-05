@@ -12,7 +12,15 @@
         android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="false"
+
         android:theme="@style/Theme.MakeOrders">
+        <activity
+            android:name=".RegistrationActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_config" />
