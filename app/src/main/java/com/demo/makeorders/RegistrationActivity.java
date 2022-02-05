@@ -48,7 +48,7 @@ EditText firstNameText,lastNameText,companyText,emailText,passwordText;
              email=emailText.getText().toString();
              email=email.toLowerCase();
              emailText.setText(email);
-             password=passwordText.getText().toString();
+             password=companyText.getText().toString();
              if((firstName.length()>=4)&&(lastName.length()>=2)&&(!company.isEmpty())&& (email.endsWith("@gmail.com"))&&(!password.isEmpty())){
                  register_User(firstName,lastName,company,email,password);
              }
