@@ -3,10 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/drawable/logout.xml" value="0.1" />
+        <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/drawable/settings.xml" value="0.1" />
         <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/layout-land/activity_main.xml" value="0.11596119929453262" />
         <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/layout-land/activity_registration.xml" value="0.1" />
+        <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/layout/activity_admin_home_page.xml" value="0.25" />
         <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/layout/activity_registration.xml" value="0.1" />
+        <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/layout/user_detail.xml" value="0.13496376811594202" />
+        <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/layout/user_vew.xml" value="0.13496376811594202" />
+        <entry key="..\:/Users/Kwizera Claude/AndroidStudioProjects/MakeOrders/app/src/main/res/menu/my_menu.xml" value="0.25" />
       </map>
     </option>
   </component>

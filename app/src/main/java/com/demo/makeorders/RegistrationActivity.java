@@ -112,20 +112,28 @@ EditText firstNameText,lastNameText,companyText,emailText,passwordText;
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    Toast.makeText(RegistrationActivity.this, " Well registerd",Toast.LENGTH_LONG).show();
-                                    Log.i("Response: ",response.toString());
+
+                                        if(!response.has("error")) {
+                                            Toast.makeText(RegistrationActivity.this, " Well registerd", Toast.LENGTH_LONG).show();
+                                            Log.i("Response: ", response.toString());
+                                            RegistrationActivity.this.finish();
+                                        }
+                                        else {
+                                            String message= null;
+                                            try {
+                                                message = response.getString("error");
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            Toast.makeText(RegistrationActivity.this,"Error occured: "+message,Toast.LENGTH_LONG).show();
+                                          //  VolleyLog.d("Error: Tag", "Error: " + "Email already in use");
+                                            emailText.setText("");
+                                            passwordText.setText("");
+                                        }
+
                                     progressDialog.dismiss();
-                                    RegistrationActivity.this.finish();
-                                    //UserInfo=new HashMap<>();
-//                                    try {
-//
-//                                        UserInfo=toMap(response);
-//                                        token=UserInfo.get("token").toString();
-//                                        Log.i("User details:",UserInfo.get("User").toString());
-//                                        Log.d("token: ",token);
-//                                    } catch (JSONException e) {
-//                                        e.printStackTrace();
-//                                    }
+
+
                                 }
                             }, new Response.ErrorListener() {
                         @Override

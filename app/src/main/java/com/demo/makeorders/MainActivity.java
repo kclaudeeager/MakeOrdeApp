@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,9 +28,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,7 +116,7 @@ Button loginBtn;
                 Log.i("ErrorRe: ",responseBody);
                 String message=data.getString("message");
                 Log.d("Status: ",data.getString("status"));
-                if(data.getString("status").equalsIgnoreCase("500") && message==""){
+                if(data.getString("status").equalsIgnoreCase("500") && message.equalsIgnoreCase("")){
                     message="Invalid email or password";
                 }
                 Log.i("Error: ",message);
@@ -151,16 +155,42 @@ Button loginBtn;
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    Toast.makeText(MainActivity.this, " Well posted",Toast.LENGTH_LONG).show();
+
                                     Log.i("Response: ",response.toString());
                                     UserInfo=new HashMap<>();
                                     try {
+                                       if(!response.has("error")) {
+                                           Toast.makeText(MainActivity.this, " Well Logedin",Toast.LENGTH_LONG).show();
+                                           UserInfo = toMap(response);
+                                           token = UserInfo.get("token").toString();
+                                           Log.i("User details:", UserInfo.get("User").toString());
+                                           JSONObject userJson = new JSONObject(response.get("User").toString());
+                                           Log.i("userJson:", userJson.toString());
+                                           // Object user=(UserInfo.get("User")).getClass();
+                                           Log.d("token: ", token);
 
-                                        UserInfo=toMap(response);
-                                        token=UserInfo.get("token").toString();
-                                        Log.i("User details:",UserInfo.get("User").toString());
-                                        Log.d("token: ",token);
+                                           String role = userJson.get("role").toString();
+                                           Log.i("Role ", role);
+                                           switch (role) {
+                                               case "4": {
+                                                   Intent intent = new Intent(MainActivity.this, AdminHomePage.class);
+                                                   intent.putExtra("UserInfo", response.toString());
+
+                                                   startActivity(intent);
+                                               }
+                                               break;
+
+                                           }
+                                       }
+                                       else {
+                                           String message=response.getString("error");
+                                           Toast.makeText(getApplicationContext(),"Error: "+message,Toast.LENGTH_LONG).show();
+                                           emailText.setText("");
+                                           passwordeText.setText("");
+                                           progressDialog.dismiss();
+                                       }
                                         progressDialog.dismiss();
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

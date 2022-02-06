@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MakeOrders</string>
     <string name="newUser"><a href="">Register Now</a></string>
+    <string-array name="roles">
+        <item>retailler</item>
+        <item>supplier</item>
+    </string-array>
 </resources>

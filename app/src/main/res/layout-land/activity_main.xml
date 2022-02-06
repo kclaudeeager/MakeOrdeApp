@@ -68,6 +68,7 @@
         android:layout_marginTop="24dp"
 
         android:background="@color/teal_700"
+        android:drawableLeft="@drawable/login"
         android:shadowRadius="@integer/material_motion_duration_medium_2"
         android:text="Login"
         android:textColor="@color/white"
