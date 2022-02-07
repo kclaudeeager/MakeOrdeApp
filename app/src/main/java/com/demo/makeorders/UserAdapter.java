@@ -1,19 +1,30 @@
 package com.demo.makeorders;
 
+import static com.demo.makeorders.AdminHomePage.onClickListener;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-        import java.util.ArrayList;
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class  UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
     ArrayList<User> users;
     UserViewHolder userViewHolder;
     Context context;
+    ViewGroup parent;
+
+
     public UserAdapter(ArrayList<User> users, UserViewHolder userViewHolder) {
         this.users = users;
         this.userViewHolder = userViewHolder;
@@ -32,7 +43,9 @@ public class  UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        this.parent=parent;
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.user_vew,parent,false);
+        view.setOnClickListener(onClickListener);
         return new UserViewHolder(view,parent.getContext());
 
     }

@@ -8,6 +8,12 @@
 android:title=""
     app:showAsAction="ifRoom"
     />
+    <item android:id="@+id/retailers"
+        android:title="Retailers"
+        />
+    <item android:id="@+id/suppliers"
+        android:title="suppliers"
+        />
     <item android:id="@+id/settings"
         android:title="Settings"
         android:icon="@drawable/settings"

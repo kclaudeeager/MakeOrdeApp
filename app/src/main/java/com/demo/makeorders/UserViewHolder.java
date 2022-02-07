@@ -1,5 +1,6 @@
 package com.demo.makeorders;
 
+import static com.demo.makeorders.AdminHomePage.recyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,9 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserViewHolder extends RecyclerView.ViewHolder {
 TextView company,role;
 User user;
+    Context context;
+
     public  UserViewHolder(@NonNull View itemView, Context context) {
 
         super(itemView);
+        this.context=context;
         company=(TextView) itemView.findViewById(R.id.company_name);
         role=(TextView) itemView.findViewById(R.id.company_role);
 

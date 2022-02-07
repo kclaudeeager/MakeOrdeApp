@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     tools:context=".AdminHomePage">
 
@@ -26,7 +26,7 @@
         android:id="@+id/textView7"
         android:layout_width="293dp"
         android:layout_height="30dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="12dp"
         android:text="List of Users"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
@@ -35,8 +35,8 @@
 
     <EditText
         android:id="@+id/search_user"
-        android:layout_width="222dp"
-        android:layout_height="42dp"
+        android:layout_width="163dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Search from here.."
@@ -49,24 +49,24 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userList"
         android:layout_width="wrap_content"
-        android:layout_height="536dp"
-        android:layout_marginStart="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="352dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.296"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_user"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintVertical_bias="0.424" />
 
     <FrameLayout
         android:id="@+id/details"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:background="@color/design_default_color_secondary_variant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/userList"
-        app:layout_constraintTop_toBottomOf="@+id/search_user"
-        app:layout_constraintVertical_bias="0.916">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
 

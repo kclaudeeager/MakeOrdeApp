@@ -17,7 +17,8 @@
         android:theme="@style/Theme.MakeOrders">
         <activity
             android:name=".AdminHomePage"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".RegistrationActivity"
             android:exported="false"

@@ -168,7 +168,8 @@ Button loginBtn;
                                            Log.i("userJson:", userJson.toString());
                                            // Object user=(UserInfo.get("User")).getClass();
                                            Log.d("token: ", token);
-
+                                           emailText.setText("");
+                                           passwordeText.setText("");
                                            String role = userJson.get("role").toString();
                                            Log.i("Role ", role);
                                            switch (role) {
@@ -198,6 +199,7 @@ Button loginBtn;
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            if(error!=null)
                            parseVollyError(error);
                             emailText.setText("");
                             passwordeText.setText("");
