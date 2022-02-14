@@ -1,5 +1,4 @@
 package com.demo.makeorders;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -36,7 +35,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
 String email,password;
 EditText emailText,passwordeText;
@@ -74,9 +72,7 @@ Button loginBtn;
                  }
              }
          });
-
     }
-
     protected void onStart(Bundle savedInstance){
         super.onStart();
     }
@@ -173,11 +169,20 @@ Button loginBtn;
                                            String role = userJson.get("role").toString();
                                            Log.i("Role ", role);
                                            switch (role) {
+
                                                case "4": {
                                                    Intent intent = new Intent(MainActivity.this, AdminHomePage.class);
                                                    intent.putExtra("UserInfo", response.toString());
 
                                                    startActivity(intent);
+                                               }
+                                               break;
+                                               default:{
+                                                   Intent intent = new Intent(MainActivity.this, RetailerHome.class);
+                                                   intent.putExtra("UserInfo", response.toString());
+
+                                                   startActivity(intent);
+
                                                }
                                                break;
 
