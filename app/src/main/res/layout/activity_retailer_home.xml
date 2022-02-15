@@ -68,7 +68,7 @@
             <FrameLayout
                 android:id="@+id/frameLayout_picked_products"
                 android:layout_width="match_parent"
-                android:layout_height="176dp"
+                android:layout_height="130dp"
                 android:background="@color/design_default_color_secondary_variant"
 
                 tools:layout_editor_absoluteY="461dp"></FrameLayout>
@@ -78,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:layout_marginStart="18dp"
                 android:layout_marginBottom="12dp"
                 android:text="Choose Supplier" />
         <LinearLayout
@@ -88,11 +89,12 @@
                 android:id="@+id/spinner_supplier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginBottom="5dp" />
 
             <Button
                 android:id="@+id/sendOrder"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="90dp"
                 android:layout_marginEnd="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
