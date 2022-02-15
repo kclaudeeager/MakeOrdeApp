@@ -3,6 +3,8 @@ package com.demo.makeorders;
 public class Order {
     int orderId;
     Product product;
+    User retailer;
+    User supplier;
 public Order(){
 
 }

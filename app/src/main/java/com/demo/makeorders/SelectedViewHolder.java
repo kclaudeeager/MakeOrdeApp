@@ -1,5 +1,4 @@
 package com.demo.makeorders;
-
 import static com.demo.makeorders.RetailerHome.isSelectedList;
 
 import android.content.Context;
@@ -9,12 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class Product_View_Holder extends RecyclerView.ViewHolder {
+public class SelectedViewHolder extends RecyclerView.ViewHolder {
     TextView productName, productPrice;
     Product product;
     Context context;
 
-    public Product_View_Holder(@NonNull View itemView, Context context) {
+    public SelectedViewHolder(@NonNull View itemView, Context context) {
 
         super(itemView);
         this.context = context;
@@ -26,6 +25,10 @@ public class Product_View_Holder extends RecyclerView.ViewHolder {
 
     public void BindProduct(final Product product) {
         productName.setText(product.getpName());
-        productPrice.setText(""+product.getPrice());
+        if(product.getNumReq()!=0){
+            productPrice.setText(""+product.getPrice()+" X "+product.getNumReq());
+        }
+
     }
 }
+

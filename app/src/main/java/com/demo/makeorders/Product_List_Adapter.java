@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import static com.demo.makeorders.RetailerHome.onClickListener;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class Product_List_Adapter extends RecyclerView.Adapter<Product_View_Hold
     public Product_View_Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         this.parent=parent;
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.product_view,parent,false);
-       // view.setOnClickListener(onClickListener);
+       view.setOnClickListener(onClickListener);
         return new Product_View_Holder(view,parent.getContext());
 
     }

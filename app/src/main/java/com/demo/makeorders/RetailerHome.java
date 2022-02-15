@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,12 +49,16 @@ TextView userName;
 String all_names="";
 Button sendBtn;
 User user;
-    ArrayAdapter user_adapter;
+String selectedSupplier;
+ArrayAdapter user_adapter;
 public  ArrayList<User> userArrayList;
 public static  View.OnClickListener onClickListener;
 Product_List_Adapter product_list_adapter;
-
+SelectedAdapter selectedProduct_list_adapter;
 ArrayList<Product> productArrayList;
+RecyclerView selectedProductRecyclerView;
+ArrayList<Product> selectedProductArrayList;
+public static boolean isSelectedList=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +90,72 @@ ArrayList<Product> productArrayList;
         }
         loadProducts();
         loadSuppliers();
+        selectedProductArrayList=new ArrayList<>();
+
+        onClickListener=new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isSelectedList=true;
+                int position = productRecyclerView.getChildLayoutPosition(view);
+                Product product = productArrayList.get(position);
+                TextView productName, productPrice;
+                AlertDialog.Builder builder;
+                if (product != null) {
+                    String product_name = product.getpName();
+                    Double price = product.getPrice();
+                    LayoutInflater inflater = LayoutInflater.from(RetailerHome.this);
+                    View productListView =  inflater.inflate(R.layout.selected_recyclerview, frameLayout, true);
+                    selectedProductRecyclerView=productListView.findViewById(R.id.selected_recyclerview);
+                   builder=new AlertDialog.Builder(RetailerHome.this);
+                    ViewGroup viewGroup=RetailerHome.this.findViewById(R.id.retailer);
+                    View dialogView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.number_of_items, viewGroup, false);
+                    Button okbtn=dialogView.findViewById(R.id.ok);
+                    Button cancelbtn=dialogView.findViewById(R.id.cancel);
+                    EditText editText=dialogView.findViewById(R.id.qtty);
+                    builder.setView(dialogView);
+                    AlertDialog alertDialog=builder.create();
+                    alertDialog.show();
+
+                            okbtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    try {
+                                        Integer qtty = Integer.parseInt(editText.getText().toString());
+                                        product.setNumReq(qtty);
+
+                                        if (!selectedProductArrayList.contains(product)) {
+                                            selectedProductArrayList.add(product);
+                                        }
+                                        Log.d("productArrayList  >>>", selectedProductArrayList.toString());
+                                        selectedProduct_list_adapter = new SelectedAdapter(selectedProductArrayList, RetailerHome.this);
+                                        selectedProductRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                        selectedProductRecyclerView.setVerticalScrollBarEnabled(true);
+                                        selectedProductRecyclerView.setAdapter(selectedProduct_list_adapter);
+                                        alertDialog.dismiss();
+                                    } catch (NumberFormatException exception) {
+                                        exception.printStackTrace();
+                                    }
+                                }
+
+                            });
+
+                   cancelbtn.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View view) {
+                           alertDialog.dismiss();
+                       }
+                   });
+                }
+
+            }
+        };
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
     synchronized private void loadProducts(){
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -118,7 +191,9 @@ ArrayList<Product> productArrayList;
                                             Product product = new Product();
                                             product.setpName(pName);
                                             product.setPrice(price);
+
                                             Log.i("Product:>>", product.toString());
+
                                             if (!productArrayList.contains(product))
                                                 productArrayList.add(product);
                                         }
